@@ -14,8 +14,9 @@ class App extends Component {
     super()
 
     this.state = {
-      cards: [],
-      buttons: 'catelog'
+      catalog: [],
+      library: [],
+      buttons: 'catalog'
     }
 
     this.handleCatAddButton = this.handleCatAddButton.bind( this )
@@ -25,26 +26,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3001/api/allCards')
-    .then((res) => {
-      let newCards = []
-
-      for(let i = 0; i < 50; i++){
-        newCards.push(
-          <Card
-            key={i}
-            id={res.data[i].id}
-            imageURIS={res.data[i].image_uris['large']}
-            buttons='catelog'
-            handleCatAddButtonFn={this.handleCatAddButton}
-          />
-        )
-      }
-
-      this.setState({
-        cards: newCards
-      })
-    })
+    this.handleCatButton()
   }
 
   handleCatAddButton(id) {
@@ -61,34 +43,21 @@ class App extends Component {
   handleLibButton() {
     axios.get('http://localhost:3001/api/yourCards')
     .then((res) => {
-      let newCards = []
-
-      for(let i = 0; i < res.data.length; i++){
-        let quantity = 
-        res.data[i].quantity ?
-        res.data[i].quantity :
-        1
-
-        newCards.push(
-          <Card
-            key={i}
-            id={res.data[i].id}
-            imageURIS={res.data[i].image_uris['large']}
-            buttons='library'
-            handleCountChangeFn={this.handleCountChange}
-            count={quantity}
-          />
-        )
-      }
-
       this.setState({
-        cards: newCards
+        library: res.data,
+        buttons: 'library'
       })
     })
   }
 
   handleCatButton() {
-    this.componentDidMount()
+    axios.get('http://localhost:3001/api/allCards')
+    .then((res) => {
+      this.setState({
+        catalog: res.data.slice(0,50),
+        buttons: 'catalog'
+      })
+    })
   }
 
   handleCountChange(value) {
@@ -96,14 +65,43 @@ class App extends Component {
   }
 
   render() {
+    let catalogCards = this.state.catalog.map((card) => {
+      return (
+        <Card
+          key={card.id}
+          id={card.id}
+          imageURIS={card.image_uris['large']}
+          buttons='catalog'
+          handleCatAddButtonFn={this.handleCatAddButton}
+        />
+      )
+    })
+
+    let libraryCards = this.state.library.map((card) => {
+      let quantity = card.quantity ?
+                     card.quantity :
+                     1
+
+      return (
+          <Card
+            key={card.id}
+            id={card.id}
+            imageURIS={card.image_uris['large']}
+            buttons='library'
+            handleCountChangeFn={this.handleCountChange}
+            count={quantity}
+          />
+      )
+    })
+
     return (
       <div className="App">
         <ToastContainer />
-        <Header name='Magic Catelog'/>
+        <Header name='Magic catalog'/>
         <div className='sameLine'>
           <Sidebar handleLibButtonFn={this.handleLibButton} handleCatButtonFn={this.handleCatButton}/>
           <main className='main'>
-            {this.state.cards}
+            {this.state.buttons === 'catalog' ? catalogCards : libraryCards}
           </main>
         </div>
       </div>
