@@ -16,8 +16,8 @@ class App extends Component {
     this.state = {
       catalog: [],
       library: [],
-      buttons: 'catalog',
-      crap: ''
+      filterCat: [],
+      buttons: 'catalog'
     }
 
     this.handleCatAddButton = this.handleCatAddButton.bind( this )
@@ -25,6 +25,7 @@ class App extends Component {
     this.handleCatButton = this.handleCatButton.bind( this )
     this.handleCountChange = this.handleCountChange.bind( this )
     this.handleDelLibButton = this.handleDelLibButton.bind( this )
+    this.handleFilter = this.handleFilter.bind( this )
   }
 
   componentDidMount() {
@@ -80,6 +81,29 @@ class App extends Component {
     })
   }
 
+  handleFilter(value) {
+    console.log(this.state.buttons)
+    this.state.buttons === 'catalog' 
+    
+    ?
+    axios.get(`http://localhost:3001/api/allCards/${value}`)
+    .then((res) => {
+      this.setState({
+        catalog: res.data.slice(0,50),
+        buttons: 'catalog'
+      })
+    })
+
+    :
+    axios.get(`http://localhost:3001/api/yourCards/${value}`)
+    .then((res) => {
+      this.setState({
+        catalog: res.data.slice(0,50),
+        buttons: 'library'
+      })
+    })
+  }
+
   render() {
     let catalogCards = this.state.catalog.map((card) => {
       return (
@@ -114,7 +138,7 @@ class App extends Component {
     return (
       <div className="App">
         <ToastContainer />
-        <Header name='Magic catalog'/>
+        <Header name='Magic catalog' handleOnChangeFn={this.handleFilter}/>
         <div className='sameLine'>
           <Sidebar handleLibButtonFn={this.handleLibButton} handleCatButtonFn={this.handleCatButton}/>
           <main className='main'>

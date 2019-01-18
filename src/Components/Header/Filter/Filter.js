@@ -11,7 +11,6 @@ class Filter extends Component {
     }
 
     handleOnChange(value) {
-        console.log(value)
         this.setState({
             text: value
         })
@@ -21,7 +20,7 @@ class Filter extends Component {
         return (
             <div className='filterParent'>
                 <input placeholder='Card Name' onChange={(e) => this.handleOnChange(e.target.value)}/>
-                <button>
+                <button onClick={() => this.props.handleOnChangeFn(this.state.text)}>
                     Search
                 </button>
             </div>

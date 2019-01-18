@@ -8,6 +8,8 @@ app.use(bodyParser.json())
 
 app.get(`/api/allCards`, magicController.getAllTheMagicCards)
 app.get(`/api/yourCards`, magicController.getYourMagicCards)
+app.get(`/api/yourCards/:filter`, magicController.filterYourLibrary)
+app.get(`/api/allCards/:filter`, magicController.filterCatalogLibrary)
 app.post(`/api/allCards/`, magicController.postCardToLibrary)
 app.put(`/api/allCards/:id`, magicController.updateCardQuantity)
 app.delete(`/api/allCards/:id`, magicController.deleteCardFromLibrary)

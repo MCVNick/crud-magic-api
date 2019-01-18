@@ -1,15 +1,24 @@
 const axios = require('axios')
-// const mtgDataAPI = `https://api.scryfall.com/cards`
-// const mtgData = axios.get(mtgDataAPI).then((res) => res.data)
-const mtgData = require('./tempScryfall.json')
+const mtgDataAPI = `https://api.scryfall.com/cards`
 
-let allTheMagicCards = mtgData.data
 
+let allTheMagicCards = []
 let yourMagicCards = []
 
 module.exports = {
     getAllTheMagicCards: (req, res) => {
-        res.status(200).send(allTheMagicCards)
+        allTheMagicCards 
+
+        ?
+        axios.get(mtgDataAPI).then((response) => {
+            allTheMagicCards = response.data.data
+            res.status(200).send(response.data.data.filter((card) => {
+                return card.lang === 'en'
+            }))
+        })
+
+        :
+        res.status(200).send(response.data.data)
     },
     getYourMagicCards: (req, res) => {
         res.status(200).send(yourMagicCards)
@@ -22,17 +31,17 @@ module.exports = {
         //If that id matches something in all the cards add it is not in our cards add it
         if (newCardIndex !== -1 && yourCardIndex === -1) {
             yourMagicCards.push(allTheMagicCards[newCardIndex]);
-            res.status(201).send(allTheMagicCards)
+            res.status(201).send(yourMagicCards)
         }
         //Otherwise if it is in our cards than just update quantity
         else if (newCardIndex !== -1 && yourCardIndex !== -1) {
             yourMagicCards[yourCardIndex].quantity ?
             yourMagicCards[yourCardIndex].quantity++ :
             yourMagicCards[yourCardIndex].quantity = 2
-            res.status(200).send(allTheMagicCards)
+            res.status(200).send(yourMagicCards)
         }
         else {
-            res.status(404).send(allTheMagicCards)
+            res.status(404).send(yourMagicCards)
         }
     },
     updateCardQuantity: (req, res) => {
@@ -41,16 +50,16 @@ module.exports = {
         const updateCard = yourMagicCards.findIndex((card) => card.id === cardID)
 
         if(updateCard === -1){
-            res.status(204).send(allTheMagicCards)
+            res.status(204).send(yourMagicCards)
         }
         else{
             if(updateQuantity <= 0){
                 yourMagicCards.splice(updateCard, 1)
-                res.status(200).send(allTheMagicCards)
+                res.status(200).send(yourMagicCards)
             }
             else {
                 yourMagicCards[updateCard].quantity = updateQuantity
-                res.status(200).send(allTheMagicCards)
+                res.status(200).send(yourMagicCards)
             }
         }
     },
@@ -60,11 +69,25 @@ module.exports = {
 
         //If that id matches something in all the cards add it is not in our cards add it
         if (deleteCardID === -1) {
-            res.status(204).send(allTheMagicCards)
+            res.status(204).send(yourMagicCards)
         }
         else {
             yourMagicCards.splice(deleteCardID, 1)
-            res.status(200).send(allTheMagicCards)
+            res.status(200).send(yourMagicCards)
         }
+    },
+    filterYourLibrary: (req, res) => {
+        const filter = req.params.filter.toUpperCase()
+
+        res.status(200).send(yourMagicCards.filter((card) => {
+            return card.name.toUpperCase().includes(filter)
+        }))
+    },
+    filterCatalogLibrary: (req, res) => {
+        const filter = req.params.filter.toUpperCase()
+
+        res.status(200).send(allTheMagicCards.filter((card) => {
+            return card.name.toUpperCase().includes(filter)
+        }))
     }
 }

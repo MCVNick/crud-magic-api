@@ -9,7 +9,7 @@ const Header = (props) => {
             <h1 className='headerName'>
                 {props.name ? props.name : 'Enter A Name'}
             </h1>
-            <Filter />
+            <Filter handleOnChangeFn={props.handleOnChangeFn}/>
         </div>
     )
 }
