@@ -62,11 +62,6 @@ module.exports = {
         if (deleteCardID === -1) {
             res.status(204).send(allTheMagicCards)
         }
-        //Otherwise if it is in our cards than just update quantity
-        else if (yourMagicCards[deleteCardID].quantity > 1) {
-            yourMagicCards[deleteCardID].quantity--
-            res.status(200).send(allTheMagicCards)
-        }
         else {
             yourMagicCards.splice(deleteCardID, 1)
             res.status(200).send(allTheMagicCards)

@@ -24,6 +24,7 @@ class App extends Component {
     this.handleLibButton = this.handleLibButton.bind( this )
     this.handleCatButton = this.handleCatButton.bind( this )
     this.handleCountChange = this.handleCountChange.bind( this )
+    this.handleDelLibButton = this.handleDelLibButton.bind( this )
   }
 
   componentDidMount() {
@@ -72,6 +73,13 @@ class App extends Component {
     })
   }
 
+  handleDelLibButton(id) {
+    axios.delete(`http://localhost:3001/api/allCards/${id}`)
+    .then((res) => {
+      this.handleLibButton()
+    })
+  }
+
   render() {
     let catalogCards = this.state.catalog.map((card) => {
       return (
@@ -97,6 +105,7 @@ class App extends Component {
             imageURIS={card.image_uris['large']}
             buttons='library'
             handleCountChangeFn={this.handleCountChange}
+            handleDelLibButtonFn={this.handleDelLibButton}
             count={quantity}
           />
       )
