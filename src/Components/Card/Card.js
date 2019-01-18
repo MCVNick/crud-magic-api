@@ -1,18 +1,18 @@
-import React, {component} from 'react'
+import React, {Component} from 'react'
 
-class Card extends component {
+class Card extends Component {
     constructor() {
         super()
 
         this.state = {
-
+            
         }
     }
 
     render() {
         return (
-            <div>
-                
+            <div className='cardParent'>
+                <img src={this.props.imageURIS} alt="Magic Card"/>
             </div>
         )
     }
