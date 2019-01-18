@@ -20,7 +20,7 @@ class Card extends Component {
                 {
                     this.props.buttons === 'catelog' ?
                     <CatButtons handleCatAddButtonFn={this.props.handleCatAddButtonFn} id={this.props.id}/> :
-                    <LibButtons />
+                    <LibButtons handleCountChangeFn={this.props.handleCountChangeFn} count={this.props.count}/>
                 }
             </div>
         )

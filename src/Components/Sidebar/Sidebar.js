@@ -7,7 +7,7 @@ const Sidebar = (props) => {
             <button className='button1' onClick={() => props.handleLibButtonFn()}>
                 Your Library
             </button>
-            <button className='button2'>
+            <button className='button2' onClick={() => props.handleCatButtonFn()}>
                 Catalog
             </button>
         </aside>

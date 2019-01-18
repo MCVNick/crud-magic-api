@@ -20,6 +20,8 @@ class App extends Component {
 
     this.handleCatAddButton = this.handleCatAddButton.bind( this )
     this.handleLibButton = this.handleLibButton.bind( this )
+    this.handleCatButton = this.handleCatButton.bind( this )
+    this.handleCountChange = this.handleCountChange.bind( this )
   }
 
   componentDidMount() {
@@ -62,12 +64,19 @@ class App extends Component {
       let newCards = []
 
       for(let i = 0; i < res.data.length; i++){
+        let quantity = 
+        res.data[i].quantity ?
+        res.data[i].quantity :
+        1
+
         newCards.push(
           <Card
             key={i}
             id={res.data[i].id}
             imageURIS={res.data[i].image_uris['large']}
             buttons='library'
+            handleCountChangeFn={this.handleCountChange}
+            count={quantity}
           />
         )
       }
@@ -78,13 +87,21 @@ class App extends Component {
     })
   }
 
+  handleCatButton() {
+    this.componentDidMount()
+  }
+
+  handleCountChange(value) {
+    console.log(value)
+  }
+
   render() {
     return (
       <div className="App">
         <ToastContainer />
         <Header name='Magic Catelog'/>
         <div className='sameLine'>
-          <Sidebar handleLibButtonFn={this.handleLibButton}/>
+          <Sidebar handleLibButtonFn={this.handleLibButton} handleCatButtonFn={this.handleCatButton}/>
           <main className='main'>
             {this.state.cards}
           </main>
