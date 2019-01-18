@@ -1,7 +1,8 @@
 .asideParent {
     background-color: #666666;
     width: 10%;
-    height: calc(100vh - 60px);
+    height: auto;
+    min-height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -9,6 +10,15 @@
 }
 
 .asideParent > button {
+    position: sticky;
     width: 80%;
     margin: 0% 10%;
+}
+
+.button1 {
+    top: 10px;
+}
+
+.button2 {
+    top: 31px;
 }

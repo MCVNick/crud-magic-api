@@ -8,7 +8,8 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    margin: 25px;
 }
 
 .sameLine {

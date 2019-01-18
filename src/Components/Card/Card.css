@@ -1,8 +1,13 @@
 .cardParent {
-    background-color: #666666;
+    position: relative;
     display: flex;
     flex-direction: row-reverse;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
+}
+
+.cardParent > img {
+    width: 250px;
+    margin: 10px;
 }
