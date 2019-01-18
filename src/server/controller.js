@@ -1,29 +1,9 @@
 const axios = require('axios')
 // const mtgDataAPI = `https://api.scryfall.com/cards`
 // const mtgData = axios.get(mtgDataAPI).then((res) => res.data)
+const mtgData = require('./tempScryfall.json')
 
-// console.log(mtgData)
-
-let allTheMagicCards = [
-    {
-        id: 0,
-        name: 'Island',
-        image: {
-            small: 'image'
-        },
-        type_line: 'Basic Land - Island',
-        oracle_text: 'add island',
-    },
-    {
-        id: 1,
-        name: 'Mountain',
-        image: {
-            small: 'image'
-        },
-        type_line: 'Basic Land - Mountain',
-        oracle_text: 'add mountain',
-    }
-]
+let allTheMagicCards = mtgData.data
 
 let yourMagicCards = []
 

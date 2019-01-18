@@ -1,0 +1,17 @@
+.headerParent {
+    height: 50px;
+    background-color: #333333;
+    font-size: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.headerName {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
