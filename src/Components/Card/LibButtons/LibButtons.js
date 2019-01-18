@@ -14,7 +14,7 @@ class LibButtons extends Component {
         return (
             <div>
                 <div className='count'>Count:</div>
-                <input className='inputCount' type='number' onChange={(e) => this.props.handleCountChangeFn(e.target.value)} value={this.props.count}/>
+                <input className='inputCount' type='number' onChange={(e) => this.props.handleCountChangeFn(e.target.value, this.props.id)} value={this.props.count}/>
                 <button className='deleteCard'>♲</button>
             </div>
         )

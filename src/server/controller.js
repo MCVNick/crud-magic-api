@@ -36,7 +36,7 @@ module.exports = {
         }
     },
     updateCardQuantity: (req, res) => {
-        const cardID = +req.params.id
+        const cardID = req.params.id
         const updateQuantity = req.body.quantity
         const updateCard = yourMagicCards.findIndex((card) => card.id === cardID)
 
@@ -55,7 +55,7 @@ module.exports = {
         }
     },
     deleteCardFromLibrary: (req, res) => {
-        const cardID = +req.params.id
+        const cardID = req.params.id
         const deleteCardID = yourMagicCards.findIndex((card) => card.id === cardID)
 
         //If that id matches something in all the cards add it is not in our cards add it

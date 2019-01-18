@@ -16,7 +16,8 @@ class App extends Component {
     this.state = {
       catalog: [],
       library: [],
-      buttons: 'catalog'
+      buttons: 'catalog',
+      crap: ''
     }
 
     this.handleCatAddButton = this.handleCatAddButton.bind( this )
@@ -60,8 +61,15 @@ class App extends Component {
     })
   }
 
-  handleCountChange(value) {
-    console.log(value)
+  handleCountChange(value,id) {
+    const quantityObj = {
+      quantity: value
+    }
+
+    axios.put(`http://localhost:3001/api/allCards/${id}`, quantityObj)
+    .then((res) => {
+      this.handleLibButton()
+    })
   }
 
   render() {
