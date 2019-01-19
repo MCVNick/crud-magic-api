@@ -155,6 +155,9 @@ module.exports = {
     },
     //this is how we filter through the catalog
     filterCatalogLibrary: (req, res) => {
+        //defining filter so that we can use it in our url
+        const filter = req.params.filter
+
         //then we send a request to the specified url
         //see the variables up to, but all we are doing is adding
         //the filtered word to mtg's filter
