@@ -37,6 +37,8 @@ class App extends Component {
       id: id
     }
 
+    console.log(itemObj)
+
     axios.post('http://localhost:3001/api/allCards', itemObj)
     .then((res) => {
       toast('Added to library')
@@ -82,10 +84,6 @@ class App extends Component {
   }
 
   handleFilter(value) {
-    console.log(this.state.buttons)
-    this.state.buttons === 'catalog' 
-    
-    ?
     axios.get(`http://localhost:3001/api/allCards/${value}`)
     .then((res) => {
       this.setState({
@@ -93,28 +91,22 @@ class App extends Component {
         buttons: 'catalog'
       })
     })
-
-    :
-    axios.get(`http://localhost:3001/api/yourCards/${value}`)
-    .then((res) => {
-      this.setState({
-        catalog: res.data.slice(0,50),
-        buttons: 'library'
-      })
-    })
   }
 
   render() {
     let catalogCards = this.state.catalog.map((card) => {
-      return (
-        <Card
-          key={card.id}
-          id={card.id}
-          imageURIS={card.image_uris['large']}
-          buttons='catalog'
-          handleCatAddButtonFn={this.handleCatAddButton}
-        />
-      )
+      if (card.image_uris) {
+        return (
+          <Card
+            key={card.id}
+            id={card.id}
+            imageURIS={card.image_uris['large']}
+            buttons='catalog'
+            handleCatAddButtonFn={this.handleCatAddButton}
+          />
+        )
+      }
+      return <div key={card.id}/>
     })
 
     let libraryCards = this.state.library.map((card) => {

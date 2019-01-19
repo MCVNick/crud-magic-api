@@ -1,16 +1,22 @@
 const axios = require('axios')
-const mtgDataAPI = `https://api.scryfall.com/cards`
+const mtgDataAPIStart = `https://api.scryfall.com/cards`
+const mtgDataAPIRandom = `https://api.scryfall.com/cards/random`
+let mtgDataAPINext = ''
 
 
 let allTheMagicCards = []
 let yourMagicCards = []
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 module.exports = {
     getAllTheMagicCards: (req, res) => {
         allTheMagicCards 
 
         ?
-        axios.get(mtgDataAPI).then((response) => {
+        axios.get(mtgDataAPIStart).then((response) => {
             allTheMagicCards = response.data.data
             res.status(200).send(response.data.data.filter((card) => {
                 return card.lang === 'en'
@@ -86,8 +92,10 @@ module.exports = {
     filterCatalogLibrary: (req, res) => {
         const filter = req.params.filter.toUpperCase()
 
-        res.status(200).send(allTheMagicCards.filter((card) => {
-            return card.name.toUpperCase().includes(filter)
-        }))
+        axios.get(`https://api.scryfall.com/cards/search?q=${filter}`)
+        .then((response) => {
+            allTheMagicCards = response.data.data
+            res.status(200).send(allTheMagicCards)
+        })
     }
 }
