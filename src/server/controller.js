@@ -7,24 +7,20 @@ let mtgDataAPINext = ''
 let allTheMagicCards = []
 let yourMagicCards = []
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 module.exports = {
     getAllTheMagicCards: (req, res) => {
-        allTheMagicCards 
+        allTheMagicCards
 
-        ?
-        axios.get(mtgDataAPIStart).then((response) => {
-            allTheMagicCards = response.data.data
-            res.status(200).send(response.data.data.filter((card) => {
-                return card.lang === 'en'
-            }))
-        })
+            ?
+            axios.get(mtgDataAPIStart).then((response) => {
+                allTheMagicCards = response.data.data
+                res.status(200).send(response.data.data.filter((card) => {
+                    return card.lang === 'en'
+                }))
+            })
 
-        :
-        res.status(200).send(response.data.data)
+            :
+            res.status(200).send(allTheMagicCards)
     },
     getYourMagicCards: (req, res) => {
         res.status(200).send(yourMagicCards)
@@ -42,8 +38,8 @@ module.exports = {
         //Otherwise if it is in our cards than just update quantity
         else if (newCardIndex !== -1 && yourCardIndex !== -1) {
             yourMagicCards[yourCardIndex].quantity ?
-            yourMagicCards[yourCardIndex].quantity++ :
-            yourMagicCards[yourCardIndex].quantity = 2
+                yourMagicCards[yourCardIndex].quantity++ :
+                yourMagicCards[yourCardIndex].quantity = 2
             res.status(200).send(yourMagicCards)
         }
         else {
@@ -55,11 +51,11 @@ module.exports = {
         const updateQuantity = req.body.quantity
         const updateCard = yourMagicCards.findIndex((card) => card.id === cardID)
 
-        if(updateCard === -1){
+        if (updateCard === -1) {
             res.status(204).send(yourMagicCards)
         }
-        else{
-            if(updateQuantity <= 0){
+        else {
+            if (updateQuantity <= 0) {
                 yourMagicCards.splice(updateCard, 1)
                 res.status(200).send(yourMagicCards)
             }
@@ -93,9 +89,29 @@ module.exports = {
         const filter = req.params.filter.toUpperCase()
 
         axios.get(`https://api.scryfall.com/cards/search?q=${filter}`)
-        .then((response) => {
-            allTheMagicCards = response.data.data
-            res.status(200).send(allTheMagicCards)
-        })
+            .then((response) => {
+                allTheMagicCards = response.data.data
+                res.status(200).send(allTheMagicCards)
+            })
+    },
+    getRandomCards: (req, res) => {
+        allTheMagicCards = []
+        let promises = []
+
+        for (let i = 0; i < 10; i++) {
+            let getCard = () => {
+                promises.push(axios.get(mtgDataAPIRandom))
+            }
+
+            getCard()
+        }
+
+        axios.all(promises)
+            .then((results) => {
+                results.forEach(response => {
+                    allTheMagicCards = [...allTheMagicCards, {...response.data}]
+                });
+                res.status(200).send(allTheMagicCards)
+            })
     }
 }

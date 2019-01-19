@@ -1,5 +1,8 @@
-.addButton {
+.button {
     position: absolute;
+}
+
+.addButton {
     top: 50px;
     left: 28px;
 }

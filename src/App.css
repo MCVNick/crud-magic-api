@@ -1,5 +1,11 @@
 .App {
     display: relative;
+    background-color: black;
+    background-image: url('https://wallpaperplay.com/walls/full/7/a/1/211257.jpg');
+    background-repeat: no-repeat;
+    background-position: top 50% right -12%;
+    background-size: auto 105vh;
+    background-attachment: fixed;
 }
 
 .main {
@@ -14,4 +20,23 @@
 
 .sameLine {
     display: flex;
+}
+
+.catNavButtons {
+    position: fixed;
+}
+
+.randomButton {
+    bottom: 10px;
+    right: 10px;
+}
+
+.previousButton {
+    bottom: 10px;
+    right: 115px;
+}
+
+.nextButton {
+    bottom: 10px;
+    right: 75px;
 }

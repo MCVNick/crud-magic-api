@@ -13,7 +13,7 @@ class CatButtons extends Component {
     render() {
         return (
             <div>
-                <button className='addButton' onClick={() => this.props.handleCatAddButtonFn(this.props.id)}>
+                <button className='button addButton' onClick={() => this.props.handleCatAddButtonFn(this.props.id)}>
                     Add
                 </button>
             </div>
