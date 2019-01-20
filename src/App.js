@@ -35,7 +35,7 @@ class App extends Component {
       //may need fixed if I decide to have more than just two things on sidebar
       buttons: 'catalog',
       //this will handle what page we are on currently
-      page: 3
+      page: 1
     }
 
     //here we are binding each of the functions so that they work when calling to the state
@@ -47,6 +47,7 @@ class App extends Component {
     this.handleFilter = this.handleFilter.bind(this)
     this.handleRandomButton = this.handleRandomButton.bind(this)
     this.handleNextButton = this.handleNextButton.bind(this)
+    this.handlePreviousButton = this.handlePreviousButton.bind(this)
   }
 
   /*
@@ -80,7 +81,7 @@ class App extends Component {
       .then((res) => {
         //this is the message that will apear on the side
         //we are using toast because it is what we imported
-        toast('Added to library')
+        toast.success('Added to library')
       })
   }
 
@@ -101,6 +102,8 @@ class App extends Component {
           //this logic is used to decide which buttons are displayed on each card
           buttons: 'library'
         })
+        //telling the viewer that they are now in their library
+        toast.info('Now in library')
       })
   }
 
@@ -120,6 +123,8 @@ class App extends Component {
           //here we are showing catalog buttons again
           buttons: 'catalog'
         })
+        //telling the viewer we are now in catelog
+        toast.info('Now in catalog')
       })
   }
 
@@ -160,6 +165,8 @@ class App extends Component {
   //here we pass in a value which is how we know what to filter
   //FIXME - make a more complicated filter option for those who want to use it
   handleFilter(value) {
+    //telling the viewer that we are working on their request
+    toast.warn('Searching')
     //we will make an axios get request to the server and pass it in a value so that it knows
     //what to filter
     //if we pass in Swa it will return up to 175 cards that have swa in the name
@@ -176,11 +183,15 @@ class App extends Component {
           //now we update the buttons to catalog buttons because we will no longer be in library
           buttons: 'catalog'
         })
+        toast.success('Success')
       })
   }
 
   //this is what is called when the viewer clicks on the random button
   handleRandomButton() {
+    //we send to the viewer that we are getting their data
+    toast.warn('Getting Data')
+
     //we send a get request to the given link
     axios.get(`http://localhost:3001/api/random`)
       .then((res) => {
@@ -192,23 +203,66 @@ class App extends Component {
           //we update the buttons to catalog because we will no longer be in library
           buttons: 'catalog'
         })
+        //notify the viewer that we succeeded
+        toast.success('Success')
       })
   }
 
+  //this is what is called when the viewer clicks on the next page button
   handleNextButton() {
+    //first we set a new value equal to whatever is on state currently
     let newVal = this.state.page
+    //then we add one to that value
+    newVal++
 
+    //then we set the state to the new value
     this.setState({
-      page: newVal++
+      page: newVal
     })
 
-    axios.get(`http://localhost:3001/api/allCards/${this.state.page}`)
+    //we send to the viewer that we are getting their data
+    toast.warn('Getting Data')
+
+    //next we send an axios request to get the next page
+    axios.get(`http://localhost:3001/api/allCards/pages/${newVal}`)
       .then((res) => {
         this.setState({
+          //here we are assigning the data to the page
           catalog: res.data.slice(0),
           //here we are showing catalog buttons again
           buttons: 'catalog'
         })
+        //notify the viewer that we succeeded
+        toast.success('Success')
+      })
+  }
+
+  //this is what is called when the viewer clicks on the previous page button
+  handlePreviousButton() {
+    //first we set a new value equal to whatever is on state currently
+    let newVal = this.state.page
+    //then we subtract one to that value
+    newVal--
+
+    //then we set the state to the new value
+    this.setState({
+      page: newVal
+    })
+
+    //we send to the viewer that we are getting their data
+    toast.warn('Getting Data')
+
+    //next we send an axios request to get the next page
+    axios.get(`http://localhost:3001/api/allCards/pages/${newVal}`)
+      .then((res) => {
+        this.setState({
+          //here we are assigning the data to the page
+          catalog: res.data.slice(0),
+          //here we are showing catalog buttons again
+          buttons: 'catalog'
+        })
+        //notify the viewer that we succeeded
+        toast.success('Success')
       })
   }
 
@@ -252,10 +306,10 @@ class App extends Component {
       //if the quantity exists, than we set the cards quanityt to what it already is (card.quanity)
       //if it doesn't exist the viewer must have added it to the library so therefore it should be at least 1
       //o and we are setting that equal to a value called quantity
-      let quantity = 
+      let quantity =
         card.quantity ?
-        card.quantity :
-        1
+          card.quantity :
+          1
 
       //here is where we are returning a card from the library
       return (
@@ -280,15 +334,36 @@ class App extends Component {
       )
     })
 
+    //here we set showPrevious to either be a button or nothing
+    let showPrevious = this.state.page > 1
+
+    ? 
+    //if the page is greater than 1 show previous button
+    //on click this button will call handle previous button
+    <button className='catNavButtons previousButton' onClick={this.handlePreviousButton}>
+      Previous
+    </button>
+
+    :
+    //otherwise show nothing
+    <div></div>
+
     //here is where we are actually returning stuff to the viewer
     return (
       //first we create a div called app. this will hold everything related to the website
       <div className="App">
-        {/* FIXME - better design for the toast container */}
         {/* toast is imported and will be how we notify the viewer */}
-        {/* that being said toast is annoying and I need to fix the styling of it */}
-        {/* this could include moving it to somewhere else */}
-        <ToastContainer />
+        <ToastContainer
+          position="bottom-right"
+          autoClose={1000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover={false}
+        />
 
         {/* this is where I have imported my own header. you must pass it in a name */}
         {/* inside the header we have a simple filter. we need to pass it in a function so that we know */}
@@ -322,11 +397,8 @@ class App extends Component {
                 <button className='catNavButtons nextButton' onClick={this.handleNextButton}>
                   Next
                 </button>
-                {/* a previous button */}
-                {/* on click this button will call handle previous button */}
-                <button className='catNavButtons previousButton'>
-                  Previous
-                </button>
+                {/* this will determain if we should show the previous button */}
+                {showPrevious}
                 {/* and a random button */}
                 {/* on click this button will call handle random button */}
                 <button className='catNavButtons randomButton' onClick={this.handleRandomButton}>

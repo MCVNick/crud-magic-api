@@ -194,19 +194,27 @@ module.exports = {
                 res.status(200).send(allTheMagicCards)
             })
     },
+    //this is how we will handle changing to a new page
     getPage: (req, res) => {
+        //first we take in a new page from the url
         const page = req.params.page
-        const allTheMagicCards = []
+        //next we clear the current magic cards
+        allTheMagicCards = []
 
+        //then we make an axios get request to scryfall for a specified page (the one we send in with the url)
         axios.get(`${mtgDataAPIPage}${page}`)
             .then((response) => {
+                //here we set the results of that page to response.data.data (all the cards coming in)
                 allTheMagicCards = response.data.data
 
+                //now we return all 175 cards but only if they are an english card
                 res.status(200).send(allTheMagicCards.filter((card) => {
                     return card.lang === 'en'
                 }))
             })
+            //if we recieve an error
             .catch((error) => {
+                //send a 404 saying the cards wern't found
                 res.status(404).send(allTheMagicCards)
             })
     }
