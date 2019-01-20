@@ -3,6 +3,15 @@
 }
 
 .addButton {
-    top: 50px;
-    left: 28px;
+    bottom: 12px;
+    left: 43.85%;
+    font-size: 25px;
+    border: 2px solid #FFFFFF;
+    border-radius: 100%;
+    background-color: #AAAAAA;
+    opacity: .7;
+    color: #FFFFFF;
+    outline: none;
+    width: 33px;
+    height: 33px;
 }

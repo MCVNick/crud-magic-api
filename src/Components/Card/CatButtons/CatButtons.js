@@ -14,7 +14,7 @@ const CatButtons = (props) => {
             {/* card of specified id */}
             {/* this again is coming from app.js just passed through as props */}
             <button className='button addButton' onClick={() => props.handleCatAddButtonFn(props.id)}>
-                Add
+                +
             </button>
         </div>
     )
