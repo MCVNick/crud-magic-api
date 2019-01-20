@@ -6,3 +6,20 @@
     align-items: center;
     margin-right: 10px;
 }
+
+.filterParent > input{
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #AAAAAA;
+    color: black;
+    outline: none;
+    padding-left: 10px;
+}
+
+.filterParent > button {
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #AAAAAA;
+    color: black;
+    outline: none;
+}

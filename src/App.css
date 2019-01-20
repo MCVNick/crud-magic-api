@@ -24,19 +24,24 @@
 
 .catNavButtons {
     position: fixed;
+    bottom: 10px;
+    width: 100px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #AAAAAA;
+    opacity: .85;
+    color: black;
+    outline: none;
 }
 
 .randomButton {
-    bottom: 10px;
     right: 10px;
 }
 
 .previousButton {
-    bottom: 10px;
-    right: 115px;
+    right: 220px;
 }
 
 .nextButton {
-    bottom: 10px;
-    right: 75px;
+    right: 115px;
 }

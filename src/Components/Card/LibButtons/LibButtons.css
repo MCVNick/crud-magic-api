@@ -1,8 +1,17 @@
 .inputCount {
     position: absolute;
     top: 50px;
-    left: 80px;
-    width: 60px;
+    left: 120px;
+    height: 30px;
+    width: 75px;
+    font-size: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #AAAAAA;
+    color: black;
+    outline: none;
+    padding-left: 10px;
+    opacity: .5;
 }
 
 .count {
@@ -10,10 +19,20 @@
     top: 50px;
     left: 30px;
     color: white;
+    font-size: 30px;
+    opacity: .5;
 }
 
 .deleteCard {
     position: absolute;
+    width: 30px;
+    height: 30px;
     top: 50px;
     right: 30px;
+    background-image: url('http://iconsetc.com/icons-watermarks/flat-circle-white-on-black/bfa/bfa_trash-o/bfa_trash-o_flat-circle-white-on-black_512x512.png');
+    background-size: 30px;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 100%;
+    opacity: .5;
 }

@@ -14,12 +14,12 @@ const Sidebar = (props) => {
             {/* in it we will have two buttons */}
             {/* the first which is going to be the library button */}
             {/* on click we are calling the handle library button function from the props */}
-            <button className='button1' onClick={() => props.handleLibButtonFn()}>
+            <button className='asideButton asideLibButton' onClick={() => props.handleLibButtonFn()}>
                 Your Library
             </button>
             {/* and the second which is going to be the catelog button */}
             {/* on click we are calling the handle catalog button function from the props */}
-            <button className='button2' onClick={() => props.handleCatButtonFn()}>
+            <button className='asideButton asideCatButton' onClick={() => props.handleCatButtonFn()}>
                 Catalog
             </button>
         </aside>

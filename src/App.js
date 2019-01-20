@@ -102,8 +102,11 @@ class App extends Component {
           //this logic is used to decide which buttons are displayed on each card
           buttons: 'library'
         })
-        //telling the viewer that they are now in their library
-        toast.info('Now in library')
+        //this if statement makes it so that the user won't see this message if they are already in library
+        if(this.state.buttons !== 'library') {
+          //telling the viewer that they are now in their library
+          toast.info('Now in library')
+        }
       })
   }
 
@@ -123,8 +126,11 @@ class App extends Component {
           //here we are showing catalog buttons again
           buttons: 'catalog'
         })
-        //telling the viewer we are now in catelog
-        toast.info('Now in catalog')
+        //this if statement makes it so that the user won't see this message if they are already in catalog
+        if(this.state.buttons !== 'catalog') {
+          //telling the viewer that they are now in the catalog
+          toast.info('Now in catalog')
+        }
       })
   }
 
@@ -341,7 +347,7 @@ class App extends Component {
     //if the page is greater than 1 show previous button
     //on click this button will call handle previous button
     <button className='catNavButtons previousButton' onClick={this.handlePreviousButton}>
-      Previous
+      ◀◀◀
     </button>
 
     :
@@ -368,7 +374,7 @@ class App extends Component {
         {/* this is where I have imported my own header. you must pass it in a name */}
         {/* inside the header we have a simple filter. we need to pass it in a function so that we know */}
         {/* how to handle the filter deeper in the file structure */}
-        <Header name='Magic catalog' handleOnChangeFn={this.handleFilter} />
+        <Header name='Magic Catalog' handleOnChangeFn={this.handleFilter} />
 
         {/* here we are defining the newxt two things to be in a div */}
         {/* in the css we style them to be next to each other */}
@@ -395,7 +401,7 @@ class App extends Component {
                 {/* a next button */}
                 {/* on click this button will call handle next button */}
                 <button className='catNavButtons nextButton' onClick={this.handleNextButton}>
-                  Next
+                  ▶▶▶
                 </button>
                 {/* this will determain if we should show the previous button */}
                 {showPrevious}

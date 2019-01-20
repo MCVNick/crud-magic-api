@@ -23,7 +23,7 @@ const LibButtons = (props) => {
             {/* we have another button that is delete card it will */}
             {/* again it takes in a function from card.js from app.js */}
             {/* FIXME - change what is on the button possibly an image instead */}
-            <button className='deleteCard' onClick={() => props.handleDelLibButtonFn(props.id)}>♲</button>
+            <button className='deleteCard' onClick={() => props.handleDelLibButtonFn(props.id)}></button>
         </div>
     )
 }
