@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 //for hitting server of cards
 import axios from 'axios'
-//indicates to the user on the side.
+//indicates to the  on the side.
 import { ToastContainer, toast } from 'react-toastify';
 //FIXME - the styling for toastify, I want my own style for it
 import 'react-toastify/dist/ReactToastify.css';
@@ -85,7 +85,7 @@ class App extends Component {
       })
   }
 
-  //this is where we handle if the user clicks the library button
+  //this is where we handle if the  clicks the library button
   handleLibButton() {
     //we send an axios request to the specified url to get your cards
     //this url is different from the previous one which was all cards
@@ -97,16 +97,20 @@ class App extends Component {
           //here we are saying the library on state now is equal to the data we got from axios
           //res is the results of hitting a git to the specified url
           //data is the data we care about from the result
-          library: res.data,
+          library: res.data
+        })
+        //this if statement makes it so that the  won't see this message if they are already in library
+        if (this.state.buttons !== 'library') {
+          //telling the viewer that they are now in their library
+          toast.info('Now in library')
+        }
+        //this is updated after we display the message because we want to make it so they don't see the
+        //toast if they are already there
+        this.setState({
           //we also set the buttons to be library instead of catelog
           //this logic is used to decide which buttons are displayed on each card
           buttons: 'library'
         })
-        //this if statement makes it so that the user won't see this message if they are already in library
-        if(this.state.buttons !== 'library') {
-          //telling the viewer that they are now in their library
-          toast.info('Now in library')
-        }
       })
   }
 
@@ -122,20 +126,23 @@ class App extends Component {
           //the catalog now is equal to all the cards that were returned from res.data
           //the splice was going to be used to define how many cards I wanted to show
           //however, I could propbably remove splice and nothing would happen
-          catalog: res.data.slice(0),
-          //here we are showing catalog buttons again
-          buttons: 'catalog'
+          catalog: res.data.slice(0)
         })
-        //this if statement makes it so that the user won't see this message if they are already in catalog
-        if(this.state.buttons !== 'catalog') {
+        //this if statement makes it so that the  won't see this message if they are already in catalog
+        if (this.state.buttons !== 'catalog') {
           //telling the viewer that they are now in the catalog
           toast.info('Now in catalog')
         }
+        //this is updated after we display the message because we want to make it so they don't see the
+        //toast if they are already there
+        this.setState({
+          //here we are showing catalog buttons again
+          buttons: 'catalog'
+        })
       })
   }
 
   //here we are defining what happens when we change the count
-  //FIXME - add a verify option if the user clicks delete card or makes it 0 or less
   //we are taking in a value which is the new card count
   //we are taking in an id to know what card we are changing
   handleCountChange(value, id) {
@@ -145,26 +152,66 @@ class App extends Component {
       quantity: value
     }
 
-    //we then send a put request to axios (a request to update data)
-    //we pass into the paramater what id we are updating, and then the object with the new ammount
-    //this should then be taken care of by the back end to update the quantity of given id
-    axios.put(`http://localhost:3001/api/allCards/${id}`, quantityObj)
-      .then((res) => {
-        //then we call the handle library button because we are in the library and need to update
-        //what the viewer is looking at
-        this.handleLibButton()
-      })
+    //this one runs if we aren't deciding if we want to delete
+    if (value >= 1) {
+      //we then send a put request to axios (a request to update data)
+      //we pass into the paramater what id we are updating, and then the object with the new ammount
+      //this should then be taken care of by the back end to update the quantity of given id
+      axios.put(`http://localhost:3001/api/allCards/${id}`, quantityObj)
+        .then((res) => {
+          //then we call the handle library button because we are in the library and need to update
+          //what the viewer is looking at
+          this.handleLibButton()
+          //this will display to the viewer that the card was updated
+          toast.success('Card updated')
+        })
+    }
+    //this one runs if we are making the number small enough to delete it
+    else if (value < 1  && window.confirm('This will delete the card. Are you sure you want to continue?') === true) {
+      //we then send a put request to axios (a request to update data)
+      //we pass into the paramater what id we are updating, and then the object with the new ammount
+      //this should then be taken care of by the back end to update the quantity of given id
+      axios.put(`http://localhost:3001/api/allCards/${id}`, quantityObj)
+        .then((res) => {
+          //then we call the handle library button because we are in the library and need to update
+          //what the viewer is looking at
+          this.handleLibButton()
+          //this will display to the viewer that the card was deleted
+          toast.success('Card deleted')
+        })
+    }
+    //if the viewer doesn't want to delete the card
+    else {
+      //call this to update the value
+      this.handleLibButton()
+      //tell the viewer they didn't delete the card
+      toast.error('Card not deleted')
+    }
+
   }
 
-  //this is where we handle if the user hits the delete button on a library card
+  //this is where we handle if the viewer hits the delete button on a library card
   //we pass it in an id so that we know what card is being deleted
   handleDelLibButton(id) {
-    //now we are making an axios delete request which should delete the card of the given id
-    axios.delete(`http://localhost:3001/api/allCards/${id}`)
-      .then((res) => {
-        //we then call handle library button because we need to update the viewers stuff
-        this.handleLibButton()
-      })
+    //this will prompt the  if they want to delete the card
+    let areYouSure = window.confirm('Are you sure you want to delete this card')
+
+    //this will see if the  clicked yes or cancel
+    if (areYouSure === true) {
+      //now we are making an axios delete request which should delete the card of the given id
+      axios.delete(`http://localhost:3001/api/allCards/${id}`)
+        .then((res) => {
+          //we then call handle library button because we need to update the viewers stuff
+          this.handleLibButton()
+          //this will display to the viewer that the card was deleted
+          toast.success('Card deleted')
+        })
+    }
+    //else the viewer didn't delete the card
+    else {
+      //tell the viewer they didn't delete the card
+      toast.error('Card not deleted')
+    }
   }
 
   //this is how we handle the filter option
@@ -343,16 +390,16 @@ class App extends Component {
     //here we set showPrevious to either be a button or nothing
     let showPrevious = this.state.page > 1
 
-    ? 
-    //if the page is greater than 1 show previous button
-    //on click this button will call handle previous button
-    <button className='catNavButtons previousButton' onClick={this.handlePreviousButton}>
-      ◀◀◀
+      ?
+      //if the page is greater than 1 show previous button
+      //on click this button will call handle previous button
+      <button className='catNavButtons previousButton' onClick={this.handlePreviousButton}>
+        ◀◀◀
     </button>
 
-    :
-    //otherwise show nothing
-    <div></div>
+      :
+      //otherwise show nothing
+      <div></div>
 
     //here is where we are actually returning stuff to the viewer
     return (
