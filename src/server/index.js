@@ -18,6 +18,9 @@ app.use(bodyParser.json())
 //Get all the magic cards from catalog (limited to 175 per call)
 app.get(`/api/allCards`, magicController.getAllTheMagicCards)
 
+//Here we are handleing getting the different page
+app.get(`/api/allCards/:page`, magicController.getPage)
+
 //Get all your magic cards (not really limited, only by hardware)
 app.get(`/api/yourCards`, magicController.getYourMagicCards)
 

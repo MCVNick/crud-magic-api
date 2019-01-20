@@ -33,7 +33,9 @@ class App extends Component {
       filterCat: [],
       //this is the variable that tells us what buttons we should show on the screen
       //may need fixed if I decide to have more than just two things on sidebar
-      buttons: 'catalog'
+      buttons: 'catalog',
+      //this will handle what page we are on currently
+      page: 3
     }
 
     //here we are binding each of the functions so that they work when calling to the state
@@ -44,6 +46,7 @@ class App extends Component {
     this.handleDelLibButton = this.handleDelLibButton.bind(this)
     this.handleFilter = this.handleFilter.bind(this)
     this.handleRandomButton = this.handleRandomButton.bind(this)
+    this.handleNextButton = this.handleNextButton.bind(this)
   }
 
   /*
@@ -192,6 +195,23 @@ class App extends Component {
       })
   }
 
+  handleNextButton() {
+    let newVal = this.state.page
+
+    this.setState({
+      page: newVal++
+    })
+
+    axios.get(`http://localhost:3001/api/allCards/${this.state.page}`)
+      .then((res) => {
+        this.setState({
+          catalog: res.data.slice(0),
+          //here we are showing catalog buttons again
+          buttons: 'catalog'
+        })
+      })
+  }
+
   //this is what happens when the page loads up, it will be what is renderd on the web page
   render() {
     //before we render anything we are defining catalogCards to be whatever the state catalog cards are
@@ -298,14 +318,17 @@ class App extends Component {
               //each button will have it's coresponding on click function
               <div>
                 {/* a next button */}
-                <button className='catNavButtons nextButton'>
+                {/* on click this button will call handle next button */}
+                <button className='catNavButtons nextButton' onClick={this.handleNextButton}>
                   Next
                 </button>
                 {/* a previous button */}
+                {/* on click this button will call handle previous button */}
                 <button className='catNavButtons previousButton'>
                   Previous
                 </button>
                 {/* and a random button */}
+                {/* on click this button will call handle random button */}
                 <button className='catNavButtons randomButton' onClick={this.handleRandomButton}>
                   Random
                 </button>

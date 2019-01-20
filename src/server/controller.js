@@ -6,13 +6,10 @@ const mtgDataAPIStart = `https://api.scryfall.com/cards`
 //this is the location of getting random cards from that same database
 //it will only return a single card
 const mtgDataAPIRandom = `https://api.scryfall.com/cards/random`
-//FIXME - will add a next and previous page button
-//for now this is not used
-//it could change so we are not making it a const
-let mtgDataAPINext = ''
+//this will handle the next/previous page of scryfalls data
+const mtgDataAPIPage = `https://api.scryfall.com/cards?page=`
 //this is the location of filtering through cards
-//it could change so we are not making it a const
-let mtgDataAPISimpleFilter = `https://api.scryfall.com/cards/search?q=`
+const mtgDataAPISimpleFilter = `https://api.scryfall.com/cards/search?q=`
 
 
 //this is the array that will hold the results of up to 175 cards
@@ -191,10 +188,26 @@ module.exports = {
                     //this is where the magic happens of combining the two pieces of data
                     //it will take in all magic cards array and then add to that array
                     //all the data from response (data are the cards)
-                    allTheMagicCards = [...allTheMagicCards, {...response.data}]
+                    allTheMagicCards = [...allTheMagicCards, { ...response.data }]
                 });
                 //finally we return all the magic cards
                 res.status(200).send(allTheMagicCards)
+            })
+    },
+    getPage: (req, res) => {
+        const page = req.params.page
+        const allTheMagicCards = []
+
+        axios.get(`${mtgDataAPIPage}${page}`)
+            .then((response) => {
+                allTheMagicCards = response.data.data
+
+                res.status(200).send(allTheMagicCards.filter((card) => {
+                    return card.lang === 'en'
+                }))
+            })
+            .catch((error) => {
+                res.status(404).send(allTheMagicCards)
             })
     }
 }
