@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 app.get(`/api/allCards`, magicController.getAllTheMagicCards)
 
 //Here we are handleing getting the different page
-app.get(`/api/allCards/:page`, magicController.getPage)
+app.get(`/api/allCards/pages/:page`, magicController.getPage)
 
 //Get all your magic cards (not really limited, only by hardware)
 app.get(`/api/yourCards`, magicController.getYourMagicCards)
