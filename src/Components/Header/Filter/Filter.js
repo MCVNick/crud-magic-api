@@ -24,7 +24,7 @@ class Filter extends Component {
     handleOnChange(value) {
         axios.get(`http://localhost:3001/api/allCards/suggestion/${value}`)
             .then((res) => {
-                console.log(res.data.data)
+                console.log(res.data)
                 this.setState({
                     suggestions: res.data
                 })

@@ -255,7 +255,7 @@ module.exports = {
                 console.log(response.data.data)
                 names = response.data.data
 
-                res.status(200).send(names.slice(0,6))
+                res.status(200).send(names.slice(0,5))
             })
             //if we recieve an error
             .catch((error) => {
