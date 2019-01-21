@@ -252,7 +252,6 @@ module.exports = {
         //send an axios request to get sugestions for when the user is typing
         axios.get(`${mtgAutoComplete}${text}`)
             .then((response) => {
-                console.log(response.data.data)
                 names = response.data.data
 
                 res.status(200).send(names.slice(0,5))

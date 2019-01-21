@@ -1,9 +1,12 @@
 //here we are using stuff from react and we are going to make this a component
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 //for hitting server of cards
 import axios from 'axios'
 //we will first get the styling from the style sheet
 import './Filter.css'
+
+//we are importing the sugestions
+import Suggestion from './Suggestion/Suggestion'
 
 //after that we create a filter class that extends component from react
 class Filter extends Component {
@@ -22,19 +25,20 @@ class Filter extends Component {
     //this is how we will handle the change in the textbox
     //first we take in what is currently in the textbox
     handleOnChange(value) {
-        axios.get(`http://localhost:3001/api/allCards/suggestion/${value}`)
-            .then((res) => {
-                console.log(res.data)
-                this.setState({
-                    suggestions: res.data
+        if (value) {
+            axios.get(`http://localhost:3001/api/allCards/suggestion/${value}`)
+                .then((res) => {
+                    this.setState({
+                        suggestions: res.data
+                    })
                 })
+            //then we set the state of the textbox
+            this.setState({
+                //to be equal to the value of the text box we just passed in
+                //basically we jsut update the info in text box
+                text: value
             })
-        //then we set the state of the textbox
-        this.setState({
-            //to be equal to the value of the text box we just passed in
-            //basically we jsut update the info in text box
-            text: value
-        })
+        }
     }
 
     //this will handle on key press
@@ -54,12 +58,13 @@ class Filter extends Component {
             <div className='filterParent'>
                 {/* the input will handle on change by calling the handle on change method and passing it */}
                 {/* the new data from the textbox */}
-                <input placeholder='Card Name' onChange={(e) => this.handleOnChange(e.target.value)} onKeyPress={(e) => this.handleEnterKey(e)}/>
+                <input placeholder='Card Name' onChange={(e) => this.handleOnChange(e.target.value)} onKeyPress={(e) => this.handleEnterKey(e)} />
                 {/* then we will have a button next to it that says on click that we need to use the handle on change */}
                 {/* again handle on change comes from header.js which comes from app.js */}
                 <button onClick={() => this.props.handleOnChangeFn(this.state.text)}>
                     Search
                 </button>
+                {this.state.text !== '' ? <Suggestion suggestions={this.state.suggestions} text={this.state.text}/> : <div></div>}
             </div>
         )
     }
