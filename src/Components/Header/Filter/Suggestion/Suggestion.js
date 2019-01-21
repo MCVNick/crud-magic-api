@@ -3,26 +3,26 @@ import React from 'react'
 //importing the style for suggestion
 import './Suggestion.css'
 
+//we are creating a suggestion component that takes in props
 const Suggestion = (props) => {
+        //here we are creating suggestions to hold the five incoming suggestions using map
         let suggestions = props.suggestions.map((sug, index) => {
         return (
-            <div key={index} className={'suggestionChild'}>
+            //if this is clicked we will search it
+            <p key={index} className={'suggestionChild'} onClick={() => props.click(sug)}>
                 {sug}
-            </div>
+            </p>
         )
     })
-
-    let suggestionsParent = 
-    <span className={'suggestionsParent'}>
-            {suggestions}
-    </span>
-
+    
+    //this is what we will return to filter
     return (
-        <div>
-            {console.log(props.text)}
-            {props.text !== '' ? suggestionsParent : <div></div>}
-        </div>
+        //we are going to span and have all the suggestions appear in the span
+        <span className={'suggestionsParent'}>
+            {suggestions}
+        </span>
     )
 }
 
+//exporting suggestions for use elseware
 export default Suggestion

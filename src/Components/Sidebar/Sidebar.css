@@ -12,7 +12,11 @@
 .asideParent > button {
     position: sticky;
     width: 80%;
-    margin: 0% 10%;
+    margin: 2px 10%;
+}
+
+.asideParent > button:hover {
+    transform: scale(1.1);
 }
 
 .asideButton {
@@ -29,5 +33,5 @@
 }
 
 .asideCatButton {
-    top: 31px;
+    top: 33px;
 }

@@ -437,7 +437,7 @@ class App extends Component {
       :
       //if the image_uris doesn't exist, then the card hasn't been set
       //so don't show anything
-      <div></div>
+      null
 
     //here we set showPrevious to either be a button or nothing
     let showPrevious = this.state.page > 1
@@ -451,7 +451,7 @@ class App extends Component {
 
       :
       //otherwise show nothing
-      <div></div>
+      null
 
     //here is where we are actually returning stuff to the viewer
     return (
@@ -488,9 +488,9 @@ class App extends Component {
             {/* here we are deciding what to show based on where we are */}
             {/* technically buttons name should now be location name, but then it would */}
             {/* break all the thigs so I am just leaving it as buttons */}
-            {this.state.buttons === 'catalog' ? catalogCards : <div></div>}
-            {this.state.buttons === 'library' ? libraryCards : <div></div>}
-            {this.state.buttons === 'singleCard' ? singleCard : <div></div>}
+            {this.state.buttons === 'catalog' ? catalogCards : null}
+            {this.state.buttons === 'library' ? libraryCards : null}
+            {this.state.buttons === 'singleCard' ? singleCard : null}
 
             {/* Next we will see if the buttons are equal to catalog again */}
             {this.state.buttons === 'catalog'
@@ -515,7 +515,7 @@ class App extends Component {
               //if the buttons are not equal to catalog give back an empty div
               //this is why just an if statement will be better later
               //FIXME - replace some turnary statements with if statements
-              <div></div>
+              null
             }
           </main>
         </div>

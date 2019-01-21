@@ -18,8 +18,13 @@ class Filter extends Component {
         //then we set the state of text equal to nothing
         this.state = {
             text: '',
-            suggestions: []
+            suggestions: [],
+            focus: false
         }
+
+        this.handleFocus = this.handleFocus.bind(this)
+        this.handleOutFocus = this.handleOutFocus.bind(this)
+        this.handleSugClick = this.handleSugClick.bind(this)
     }
 
     //this is how we will handle the change in the textbox
@@ -30,6 +35,11 @@ class Filter extends Component {
                 .then((res) => {
                     this.setState({
                         suggestions: res.data
+                    })
+                })
+                .catch((error) => {
+                    this.setState({
+                        suggestions: []
                     })
                 })
             //then we set the state of the textbox
@@ -50,6 +60,48 @@ class Filter extends Component {
         }
     }
 
+    //this is the function that will toggle if we should show suggestions
+    //if we enter focus show the suggestions
+    handleFocus() {
+        this.setState({
+            focus: true
+        })
+    }
+
+    //this is the function that will toggle if we shoudl show suggestions
+    //if we leave focus don't show anything
+    handleOutFocus() {
+        //first we create a funciton that we want to only resolve after a certain time passes
+        //this is to prevent the search from disapearing right away and not doing anything
+        const delay = () => {
+            return new Promise((res) => {
+                setTimeout(() => {
+                    this.setState({
+                        focus: false
+                    });
+                  }, 150);
+            })
+        }
+
+        //here we are creating an async function that will wait for a response
+        async function wait() {
+            delay()
+        }
+
+        //finally we call it
+        wait()
+    }
+
+    //here we are handling when we click on a suggested name
+    handleSugClick(value) {
+        //first we will update the text to the suggested name
+        this.setState({
+            text: value
+        })
+        //then we will call the same thing as if we were clicking the search button
+        this.props.handleOnChangeFn(this.state.text)
+    }
+
     //this is what will be rendered when the viewer loads the page
     render() {
         //we will return this div
@@ -58,16 +110,18 @@ class Filter extends Component {
             <div className='filterParent'>
                 {/* the input will handle on change by calling the handle on change method and passing it */}
                 {/* the new data from the textbox */}
-                <input placeholder='Card Name' onChange={(e) => this.handleOnChange(e.target.value)} onKeyPress={(e) => this.handleEnterKey(e)} />
+                <input placeholder='Card Name' onChange={(e) => this.handleOnChange(e.target.value)} onKeyPress={(e) => this.handleEnterKey(e)} onFocus={this.handleFocus} onBlur={this.handleOutFocus} />
                 {/* then we will have a button next to it that says on click that we need to use the handle on change */}
                 {/* again handle on change comes from header.js which comes from app.js */}
                 <button onClick={() => this.props.handleOnChangeFn(this.state.text)}>
                     Search
                 </button>
-                {this.state.text !== '' ? <Suggestion suggestions={this.state.suggestions} text={this.state.text}/> : <div></div>}
+                {/* here we are showing suggestions based on if focus is true or false */}
+                {this.state.focus ? <Suggestion suggestions={this.state.suggestions} text={this.state.text} click={this.handleSugClick} /> : null}
             </div>
         )
     }
 }
 
+//here we are exporting filter for use elseware
 export default Filter

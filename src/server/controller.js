@@ -262,7 +262,7 @@ module.exports = {
                 names = []
 
                 //send a 404 saying the cards wern't found
-                res.status(404).send(names)
+                res.status(200).send(names)
             })
     }
 }

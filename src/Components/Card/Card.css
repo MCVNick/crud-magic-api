@@ -24,3 +24,7 @@
     margin: 10px;
     border-radius: 13px;
 }
+
+.cardParent > img:hover {
+    transform: scale(1.1);
+}

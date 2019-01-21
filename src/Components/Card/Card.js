@@ -34,7 +34,7 @@ const Card = (props) => {
                     </div>
 
                     :
-                    <div></div>
+                    null
             }
         </div>
 
@@ -58,7 +58,7 @@ const Card = (props) => {
                         id={props.id}
                     />
                     :
-                    <div></div>
+                    null
             }
             {
                 props.buttons === 'library'
@@ -76,7 +76,7 @@ const Card = (props) => {
                         handleDelLibButtonFn={props.handleDelLibButtonFn}
                     />
                     :
-                    <div></div>
+                    null
             }
         </div>
     //this saying we are going to return something to react render

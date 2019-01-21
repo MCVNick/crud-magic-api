@@ -16,6 +16,10 @@
     height: 33px;
 }
 
+.addSingleButton:hover {
+    transform: scale(1.2);
+}
+
 .singleCardName {
     position: absolute;
     top: 550px;
