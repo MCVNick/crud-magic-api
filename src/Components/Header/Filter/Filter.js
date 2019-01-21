@@ -1,5 +1,7 @@
 //here we are using stuff from react and we are going to make this a component
 import React, {Component} from 'react'
+//for hitting server of cards
+import axios from 'axios'
 //we will first get the styling from the style sheet
 import './Filter.css'
 
@@ -12,13 +14,21 @@ class Filter extends Component {
 
         //then we set the state of text equal to nothing
         this.state = {
-            text: ''
+            text: '',
+            suggestions: []
         }
     }
 
     //this is how we will handle the change in the textbox
     //first we take in what is currently in the textbox
     handleOnChange(value) {
+        axios.get(`http://localhost:3001/api/allCards/suggestion/${value}`)
+            .then((res) => {
+                console.log(res.data.data)
+                this.setState({
+                    suggestions: res.data
+                })
+            })
         //then we set the state of the textbox
         this.setState({
             //to be equal to the value of the text box we just passed in

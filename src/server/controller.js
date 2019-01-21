@@ -10,6 +10,8 @@ const mtgDataAPIRandom = `https://api.scryfall.com/cards/random`
 const mtgDataAPIPage = `https://api.scryfall.com/cards?page=`
 //this is the location of filtering through cards
 const mtgDataAPISimpleFilter = `https://api.scryfall.com/cards/search?q=`
+//this is the url that will be used to auto complete strings
+const mtgAutoComplete = `https://api.scryfall.com/cards/autocomplete?q=`
 
 
 //this is the array that will hold the results of up to 175 cards
@@ -21,6 +23,8 @@ let allTheMagicCards = []
 let yourMagicCards = []
 //this will hold the specific card if the viwer clicks on it
 let specificMagicCard = []
+//this will hold the names for autocomplete
+let names = []
 
 //this function will be used later
 //what it does is take promises and push urls onto them
@@ -232,11 +236,34 @@ module.exports = {
         //here we are getting the id from the url
         const id = req.params.id
 
+        //this is to send a request to get a specific card from scryfall
         axios.get(`${mtgDataAPIStart}/${id}`)
             .then((response) => {
                 specificMagicCard = response.data
 
+                //we send back that specific card
                 res.status(200).send(specificMagicCard)
+            })
+    },
+    getNames: (req, res) => {
+        //this is the text that the user is sending in
+        const text = req.params.text
+
+        //send an axios request to get sugestions for when the user is typing
+        axios.get(`${mtgAutoComplete}${text}`)
+            .then((response) => {
+                console.log(response.data.data)
+                names = response.data.data
+
+                res.status(200).send(names.slice(0,6))
+            })
+            //if we recieve an error
+            .catch((error) => {
+                //set names to nothing
+                names = []
+
+                //send a 404 saying the cards wern't found
+                res.status(404).send(names)
             })
     }
 }
