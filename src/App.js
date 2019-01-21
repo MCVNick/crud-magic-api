@@ -347,6 +347,28 @@ class App extends Component {
       })
   }
 
+  //handle clearing all your cards
+  handleClearAll() {
+    //this will prompt the  if they want to delete the card
+    let areYouSure = window.confirm('Are you sure you want to delete all your')
+
+    //we will only run this if they are sure they want to delete their cards
+    if(areYouSure) {
+      axios.delete(`http://localhost:3001/api/yourCards/clear`)
+        .then((res) => {
+          //we then call handle library button because we need to update the viewers stuff
+          this.handleLibButton()
+          //this will display to the viewer that the card was deleted
+          toast.success('All cards deleted')
+        })
+    }
+    //run this if they say cancel
+    else {
+      toast.error('Cards not deleted')
+    }
+  }
+  
+
   //this is what happens when the page loads up, it will be what is renderd on the web page
   render() {
     //before we render anything we are defining catalogCards to be whatever the state catalog cards are
@@ -512,9 +534,23 @@ class App extends Component {
                 </button>
               </div>
               :
-              //if the buttons are not equal to catalog give back an empty div
-              //this is why just an if statement will be better later
-              //FIXME - replace some turnary statements with if statements
+              //if the buttons are not equal to catalog give back an null
+              null
+            }
+            {this.state.buttons === 'library'
+              ?
+              //then we will show the some catalog buttons
+              <div>
+                <button className={'libButtons deleteAllCards'} onClick={() => this.handleClearAll()}>
+
+                </button>
+                <button className={'libButtons printAllCards'} onClick={() => toast.error('Not implemented yet')}>
+                  
+                </button>
+              </div>
+
+              :
+              //otherwise return null
               null
             }
           </main>

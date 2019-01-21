@@ -52,6 +52,9 @@ app.get(`/api/specific/:id`, magicController.getCard)
 //handle suggestions
 app.get(`/api/allCards/suggestion/:text`, magicController.getNames)
 
+//this is how we will remove every card
+app.delete(`/api/yourCards/clear`, magicController.clear)
+
 //this is the port we will be using
 const port = 3001;
 

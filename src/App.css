@@ -45,3 +45,32 @@
 .nextButton {
     right: 115px;
 }
+
+.libButtons {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 50px;
+    margin: 5px;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 100%;
+    opacity: .5;
+    outline: none;
+}
+
+.deleteAllCards {
+    left: 9.7%;
+    background-image: url('http://iconsetc.com/icons-watermarks/flat-circle-white-on-black/bfa/bfa_trash-o/bfa_trash-o_flat-circle-white-on-black_512x512.png');
+    background-size: 30px;
+}
+
+.printAllCards {
+    left: 11.7%;
+    background-image: url('http://iconsetc.com/icons-watermarks/flat-circle-white-on-gray/bfa/bfa_print/bfa_print_flat-circle-white-on-gray_512x512.png');
+    background-size: 30px;
+}
+
+.libButtons:hover {
+    transform: scale(1.2)
+}

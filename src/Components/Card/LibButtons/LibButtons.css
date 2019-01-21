@@ -35,4 +35,9 @@
     border: none;
     border-radius: 100%;
     opacity: .5;
+    outline: none;
+}
+
+.deleteCard:hover {
+    transform: scale(1.2)
 }

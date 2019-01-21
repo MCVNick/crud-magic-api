@@ -264,5 +264,9 @@ module.exports = {
                 //send a 404 saying the cards wern't found
                 res.status(200).send(names)
             })
+    },
+    clear: (req, res) => {
+        yourMagicCards = []
+        res.status(200).send(yourMagicCards)
     }
 }
