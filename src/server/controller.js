@@ -19,6 +19,8 @@ let allTheMagicCards = []
 //it also isn't different per user, but that is because we haven't learned how
 //to yet
 let yourMagicCards = []
+//this will hold the specific card if the viwer clicks on it
+let specificMagicCard = []
 
 //this function will be used later
 //what it does is take promises and push urls onto them
@@ -166,6 +168,13 @@ module.exports = {
                 //we then send back all the magic cards
                 res.status(200).send(allTheMagicCards)
             })
+            //this is to catch if we cannot find any cards with our search
+            .catch(() => {
+                //first we clear the cards
+                allTheMagicCards = []
+                //then we send them no cards
+                res.status(404).send(allTheMagicCards)
+            })
     },
     //this is how we handle getting all the random cards
     getRandomCards: (req, res) => {
@@ -216,6 +225,18 @@ module.exports = {
             .catch((error) => {
                 //send a 404 saying the cards wern't found
                 res.status(404).send(allTheMagicCards)
+            })
+    },
+    //this will handle getting a specific card
+    getCard: (req, res) => {
+        //here we are getting the id from the url
+        const id = req.params.id
+
+        axios.get(`${mtgDataAPIStart}/${id}`)
+            .then((response) => {
+                specificMagicCard = response.data
+
+                res.status(200).send(specificMagicCard)
             })
     }
 }

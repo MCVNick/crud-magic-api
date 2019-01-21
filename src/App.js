@@ -35,7 +35,9 @@ class App extends Component {
       //may need fixed if I decide to have more than just two things on sidebar
       buttons: 'catalog',
       //this will handle what page we are on currently
-      page: 1
+      page: 1,
+      //this will hold a single card when a card is clicked
+      singleCard: []
     }
 
     //here we are binding each of the functions so that they work when calling to the state
@@ -48,6 +50,7 @@ class App extends Component {
     this.handleRandomButton = this.handleRandomButton.bind(this)
     this.handleNextButton = this.handleNextButton.bind(this)
     this.handlePreviousButton = this.handlePreviousButton.bind(this)
+    this.handleCardClick = this.handleCardClick.bind(this)
   }
 
   /*
@@ -167,7 +170,7 @@ class App extends Component {
         })
     }
     //this one runs if we are making the number small enough to delete it
-    else if (value < 1  && window.confirm('This will delete the card. Are you sure you want to continue?') === true) {
+    else if (value < 1 && window.confirm('This will delete the card. Are you sure you want to continue?') === true) {
       //we then send a put request to axios (a request to update data)
       //we pass into the paramater what id we are updating, and then the object with the new ammount
       //this should then be taken care of by the back end to update the quantity of given id
@@ -237,6 +240,10 @@ class App extends Component {
           buttons: 'catalog'
         })
         toast.success('Success')
+      })
+      //this is to catch if we cannot find a card
+      .catch(() => {
+        toast.error('Card not found')
       })
   }
 
@@ -319,6 +326,27 @@ class App extends Component {
       })
   }
 
+  //this is how we figure out what card to display more information on
+  handleCardClick(id) {
+    axios.get(`http://localhost:3001/api/specific/${id}`)
+      .then((res) => {
+        this.setState({
+          //here we are assigning the data to the page
+          singleCard: res.data,
+        })
+        //if we are not in singleCard view
+        if (this.state.buttons !== 'singleCard'){
+          //notify the user we are now there
+          toast.info(`Viewing ${res.data.name}`)
+        }
+        //this is to allow for the toast to work properly
+        this.setState({
+          //here we are showing single card view
+          buttons: 'singleCard'
+        })
+      })
+  }
+
   //this is what happens when the page loads up, it will be what is renderd on the web page
   render() {
     //before we render anything we are defining catalogCards to be whatever the state catalog cards are
@@ -339,9 +367,11 @@ class App extends Component {
           <Card
             key={card.id}
             id={card.id}
+            card={card}
             imageURIS={card.image_uris['large']}
             buttons='catalog'
             handleCatAddButtonFn={this.handleCatAddButton}
+            handleCardClickFn={this.handleCardClick}
           />
         )
       }
@@ -381,11 +411,33 @@ class App extends Component {
           handleCountChangeFn={this.handleCountChange}
           handleDelLibButtonFn={this.handleDelLibButton}
           count={quantity}
+          handleCardClickFn={this.handleCardClick}
+          card={card}
         />
         //because you can't add cards that don't have an image (solved in catalogCards) we don't have to
         //worry about returning an empty div with an id
       )
     })
+
+    //also before we render we are defining single card to be a card
+    let singleCard = this.state.singleCard.image_uris
+
+      ?
+      //this is how we are defining the single card
+      <Card
+        key={this.state.singleCard.id}
+        id={this.state.singleCard.id}
+        imageURIS={this.state.singleCard.image_uris['large']}
+        buttons='singleCard'
+        card={this.state.singleCard}
+        handleCardClickFn={this.handleCardClick}
+        handleCatAddButtonFn={this.handleCatAddButton}
+      />
+
+      :
+      //if the image_uris doesn't exist, then the card hasn't been set
+      //so don't show anything
+      <div></div>
 
     //here we set showPrevious to either be a button or nothing
     let showPrevious = this.state.page > 1
@@ -433,11 +485,12 @@ class App extends Component {
 
           {/* this is where the cards are going to be displayed (our main content) */}
           <main className='main'>
-            {/* first we decide if the buttons are equal to catalog */}
-            {/* if they are then we send catalogCards (we defined these before the render) */}
-            {/* if they aren't we then send it libraryCards */}
-            {/* if I add more buttons I will have to fix this logic */}
-            {this.state.buttons === 'catalog' ? catalogCards : libraryCards}
+            {/* here we are deciding what to show based on where we are */}
+            {/* technically buttons name should now be location name, but then it would */}
+            {/* break all the thigs so I am just leaving it as buttons */}
+            {this.state.buttons === 'catalog' ? catalogCards : <div></div>}
+            {this.state.buttons === 'library' ? libraryCards : <div></div>}
+            {this.state.buttons === 'singleCard' ? singleCard : <div></div>}
 
             {/* Next we will see if the buttons are equal to catalog again */}
             {this.state.buttons === 'catalog'

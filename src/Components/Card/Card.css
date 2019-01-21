@@ -12,3 +12,15 @@
     margin: 10px;
     border-radius: 13px;
 }
+
+.singleCardParent {
+    position: absolute;
+    top: 80px;
+    left: 40%;
+}
+
+.singleCardParent > img {
+    width: 350px;
+    margin: 10px;
+    border-radius: 13px;
+}

@@ -46,6 +46,9 @@ app.put(`/api/allCards/:id`, magicController.updateCardQuantity)
 //here we are passing in a param with the property id
 app.delete(`/api/allCards/:id`, magicController.deleteCardFromLibrary)
 
+//handle getting a specific card
+app.get(`/api/specific/:id`, magicController.getCard)
+
 //this is the port we will be using
 const port = 3001;
 

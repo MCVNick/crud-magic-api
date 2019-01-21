@@ -1,0 +1,31 @@
+.button {
+    position: absolute;
+}
+
+.addSingleButton {
+    bottom: -30px;
+    left: 45%;
+    font-size: 25px;
+    border: 2px solid #FFFFFF;
+    border-radius: 100%;
+    background-color: #AAAAAA;
+    opacity: .7;
+    color: #FFFFFF;
+    outline: none;
+    width: 33px;
+    height: 33px;
+}
+
+.singleCardName {
+    position: absolute;
+    top: 550px;
+    color: white;
+    font-size: 25px;
+}
+
+.singleCardText {
+    position: absolute;
+    top: 590px;
+    color: white;
+    font-size: 20px;
+}

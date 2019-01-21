@@ -6,26 +6,63 @@ import './Card.css'
 //importing the bottons that will apear on the cards
 import CatButtons from './CatButtons/CatButtons'
 import LibButtons from './LibButtons/LibButtons'
+import SingleCardButtons from './SingleCardButtons/SingleCardButtons'
 
 //defining what a card is and it takes in props
 const Card = (props) => {
-    //this saying we are going to return something to react render
-    return (
+    let singleCardView =
+        <div className='singleCardParent'>
+            {/* this is where we display the image */}
+            {/* src will contain the url passed in from props */}
+            <img className='card' src={props.imageURIS} alt="Magic Card" onClick={() => props.handleCardClickFn(props.id)} />
+            {
+                // if the buttons are equal to catalog
+                props.buttons === 'singleCard'
+                    ?
+                    <div>
+                        {/* //show the single card view */}
+                        {/* //we will pass into this one the handle add catalog button function from app.js to the catalog buttons */}
+                        {/* //we will also pass in the id */}
+                        <SingleCardButtons
+                            handleCatAddButtonFn={props.handleCatAddButtonFn}
+                            id={props.id}
+                        />
+                        {console.log(props.card)}
+                        <p className={'singleCardName'}>{props.card.name}</p>
+                        <p className={'singleCardText'}>{props.card.oracle_text}</p>
+
+                    </div>
+
+                    :
+                    <div></div>
+            }
+        </div>
+
+
+
+    let notSingleCardView =
         //we are going to return this div which will hold an image and some buttons
         <div className='cardParent'>
             {/* this is where we display the image */}
             {/* src will contain the url passed in from props */}
-            <img className='card' src={props.imageURIS} alt="Magic Card"/>
+            <img className='card' src={props.imageURIS} alt="Magic Card" onClick={() => props.handleCardClickFn(props.id)} />
             {
                 // if the buttons are equal to catalog
-                props.buttons === 'catalog' ?
+                props.buttons === 'catalog'
+                    ?
                     //show the catalog buttons
                     //we will pass into this one the handle add catalog button function from app.js to the catalog buttons
                     //we will also pass in the id
                     <CatButtons
                         handleCatAddButtonFn={props.handleCatAddButtonFn}
                         id={props.id}
-                    /> :
+                    />
+                    :
+                    <div></div>
+            }
+            {
+                props.buttons === 'library'
+                    ?
                     //otherwise show the library buttons
                     //this is why I may need to come back and fix this turnary if I add more buttons
                     //we will pass in the way to handle the change of quanity from app.js to these buttons
@@ -38,8 +75,13 @@ const Card = (props) => {
                         id={props.id}
                         handleDelLibButtonFn={props.handleDelLibButtonFn}
                     />
+                    :
+                    <div></div>
             }
         </div>
+    //this saying we are going to return something to react render
+    return (
+        props.buttons === 'singleCard' ? singleCardView : notSingleCardView
     )
 }
 
