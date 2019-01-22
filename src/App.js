@@ -80,7 +80,7 @@ class App extends Component {
     //here it says that we are taking the object and finding the item with that id
     //once that id is found we will then post or add that card to our library
     //then we will do nothing else but send a message to the viewer
-    axios.post('http://localhost:3001/api/allCards', itemObj)
+    axios.post('/api/allCards', itemObj)
       .then((res) => {
         //this is the message that will apear on the side
         //we are using toast because it is what we imported
@@ -93,7 +93,7 @@ class App extends Component {
     //we send an axios request to the specified url to get your cards
     //this url is different from the previous one which was all cards
     //also instead of posting anything we are just getting stuff to display
-    axios.get('http://localhost:3001/api/yourCards')
+    axios.get('/api/yourCards')
       .then((res) => {
         //this is where we set state, items must be set this way when using react
         this.setState({
@@ -122,7 +122,7 @@ class App extends Component {
   handleCatButton() {
     //first we send an axios get request to the specified url
     //note that this one is all cards not your cards
-    axios.get('http://localhost:3001/api/allCards')
+    axios.get('/api/allCards')
       .then((res) => {
         //then we change the state of catalog and buttons
         this.setState({
@@ -160,7 +160,7 @@ class App extends Component {
       //we then send a put request to axios (a request to update data)
       //we pass into the paramater what id we are updating, and then the object with the new ammount
       //this should then be taken care of by the back end to update the quantity of given id
-      axios.put(`http://localhost:3001/api/allCards/${id}`, quantityObj)
+      axios.put(`/api/allCards/${id}`, quantityObj)
         .then((res) => {
           //then we call the handle library button because we are in the library and need to update
           //what the viewer is looking at
@@ -174,7 +174,7 @@ class App extends Component {
       //we then send a put request to axios (a request to update data)
       //we pass into the paramater what id we are updating, and then the object with the new ammount
       //this should then be taken care of by the back end to update the quantity of given id
-      axios.put(`http://localhost:3001/api/allCards/${id}`, quantityObj)
+      axios.put(`/api/allCards/${id}`, quantityObj)
         .then((res) => {
           //then we call the handle library button because we are in the library and need to update
           //what the viewer is looking at
@@ -202,7 +202,7 @@ class App extends Component {
     //this will see if the  clicked yes or cancel
     if (areYouSure === true) {
       //now we are making an axios delete request which should delete the card of the given id
-      axios.delete(`http://localhost:3001/api/allCards/${id}`)
+      axios.delete(`/api/allCards/${id}`)
         .then((res) => {
           //we then call handle library button because we need to update the viewers stuff
           this.handleLibButton()
@@ -227,7 +227,7 @@ class App extends Component {
     //what to filter
     //if we pass in Swa it will return up to 175 cards that have swa in the name
     //case is ignored on backend
-    axios.get(`http://localhost:3001/api/allCards/${value}`)
+    axios.get(`/api/allCards/${value}`)
       .then((res) => {
         //we then update the state
         this.setState({
@@ -253,7 +253,7 @@ class App extends Component {
     toast.warn('Getting Data')
 
     //we send a get request to the given link
-    axios.get(`http://localhost:3001/api/random`)
+    axios.get(`/api/random`)
       .then((res) => {
         //then we set the state with the results that come in
         this.setState({
@@ -284,7 +284,7 @@ class App extends Component {
     toast.warn('Getting Data')
 
     //next we send an axios request to get the next page
-    axios.get(`http://localhost:3001/api/allCards/pages/${newVal}`)
+    axios.get(`/api/allCards/pages/${newVal}`)
       .then((res) => {
         this.setState({
           //here we are assigning the data to the page
@@ -313,7 +313,7 @@ class App extends Component {
     toast.warn('Getting Data')
 
     //next we send an axios request to get the next page
-    axios.get(`http://localhost:3001/api/allCards/pages/${newVal}`)
+    axios.get(`/api/allCards/pages/${newVal}`)
       .then((res) => {
         this.setState({
           //here we are assigning the data to the page
@@ -328,7 +328,7 @@ class App extends Component {
 
   //this is how we figure out what card to display more information on
   handleCardClick(id) {
-    axios.get(`http://localhost:3001/api/specific/${id}`)
+    axios.get(`/api/specific/${id}`)
       .then((res) => {
         this.setState({
           //here we are assigning the data to the page
@@ -354,7 +354,7 @@ class App extends Component {
 
     //we will only run this if they are sure they want to delete their cards
     if(areYouSure) {
-      axios.delete(`http://localhost:3001/api/yourCards/clear`)
+      axios.delete(`/api/yourCards/clear`)
         .then((res) => {
           //we then call handle library button because we need to update the viewers stuff
           this.handleLibButton()

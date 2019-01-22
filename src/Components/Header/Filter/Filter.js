@@ -31,7 +31,7 @@ class Filter extends Component {
     //first we take in what is currently in the textbox
     handleOnChange(value) {
         if (value) {
-            axios.get(`http://localhost:3001/api/allCards/suggestion/${value}`)
+            axios.get(`/api/allCards/suggestion/${value}`)
                 .then((res) => {
                     this.setState({
                         suggestions: res.data
