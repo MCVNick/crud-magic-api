@@ -561,5 +561,4 @@ class App extends Component {
 }
 
 
-//we finaly export app and all of its data for use
 export default App;
