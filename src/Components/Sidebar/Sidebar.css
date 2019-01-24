@@ -7,25 +7,22 @@
     flex-direction: column;
     align-content: center;
     padding-top: 10px;
-}
-
-.asideParent > button {
-    position: sticky;
-    width: 80%;
-    margin: 2px 10%;
-}
-
-.asideParent > button:hover {
-    transform: scale(1.1);
+    min-width: 118px;
 }
 
 .asideButton {
+    position: sticky;
+    width: 80%;
+    margin: 2px 10%;
     border: 1px solid black;
     border-radius: 10px;
     background-color: #AAAAAA;
-    opacity: .85;
     color: black;
     outline: none;
+}
+
+.asideButton:hover {
+    transform: scale(1.1);
 }
 
 .asideLibButton {

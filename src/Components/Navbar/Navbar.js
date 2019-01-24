@@ -1,7 +1,7 @@
 //here we are saying that this will use stuff from react
 import React from 'react';
 //here we are importing the header style sheet
-import './Header.css'
+import './Navbar.css'
 
 //here we are importing the filter that will be used in our header
 import Filter from './Filter/Filter'
