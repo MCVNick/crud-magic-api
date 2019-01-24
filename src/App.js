@@ -13,6 +13,9 @@ import Sidebar from './Components/Sidebar/Sidebar'
 //importing all the routes we will be changing between
 import routes from './routes'
 
+//importing image
+import myImg from './images/crud-magic-app-background.jpg'
+
 //this is the app component that holds all the things on the website
 class App extends Component {
   render() {
@@ -26,8 +29,11 @@ class App extends Component {
             {/* Creating the sidebar that will also be on every page */}
             <Sidebar />
             <main className='main'>
+              <img className='mainImg' src={myImg} alt='Background'/>
               {/* This is everything else that will be changing on the webpage */}
-              {/* {routes} */}
+              <div className='mainContent'>
+                {routes}
+              </div>
             </main>
           </div>
         </div>

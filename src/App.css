@@ -5,18 +5,24 @@
 
 .mainParent {
     display: flex;
+    height: calc(100vh - 50px);
 }
 
 .main {
     width: 90%;
-    height: calc(100vh - 60px);
-    background-image: url('https://wallpaperplay.com/walls/full/7/a/1/211257.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+    position: relative;
 }
 
-.sameLine {
-    display: flex;
+.mainImg {
+    width: 90%;
+    z-index: 1;
+    position: fixed;
+    top: 0%;
+}
+
+.mainContent {
+    position: absolute;
+    z-index: 2;
 }
 
 .catNavButtons {

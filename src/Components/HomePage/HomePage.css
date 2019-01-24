@@ -1,0 +1,49 @@
+.homePageHeader {
+    font-size: 30px;
+    margin: 25px;
+    text-align: center;
+    color: white;
+}
+
+.homePageSubHeader {
+    font-size: 15px;
+    margin: 25px;
+    text-align: center;
+    color: white;
+}
+
+.homeBoxesParent {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    width: 90vw;
+    height: 65vh;
+}
+
+.homeBoxChild {
+    width: 250px;
+    height: 250px;
+    background-color: white;
+    border-radius: 25px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    opacity: .95;
+}
+
+.homeBoxChild:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+.homeBoxChildWords {
+    font-size: 20px;
+}
