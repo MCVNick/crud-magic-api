@@ -1,15 +1,19 @@
 .homePageHeader {
+    position: relative;
     font-size: 30px;
     margin: 25px;
     text-align: center;
     color: white;
+    z-index: 1;
 }
 
 .homePageSubHeader {
+    position: relative;
     font-size: 15px;
     margin: 25px;
     text-align: center;
     color: white;
+    z-index: 1;
 }
 
 .homeBoxesParent {
@@ -25,9 +29,9 @@
 }
 
 .homeBoxChild {
-    width: 250px;
-    height: 250px;
-    background-color: white;
+    width: 200px;
+    height: 200px;
+    background-color: #AAAAAA;
     border-radius: 25px;
     position: relative;
     display: flex;
@@ -36,11 +40,14 @@
     justify-content: space-around;
     align-items: center;
     align-content: center;
-    opacity: .95;
+    opacity: .80;
+    box-shadow: 5px 5px 8px 1px black;
+    text-decoration: none;
+    color: black;
 }
 
 .homeBoxChild:hover {
-    transform: scale(1.05);
+    transform: scale(1.005);
     opacity: 1;
 }
 

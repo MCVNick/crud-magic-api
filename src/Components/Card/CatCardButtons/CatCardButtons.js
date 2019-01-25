@@ -1,7 +1,7 @@
 //here we are importing things from react
 import React from 'react'
 //here we are importing the styling for the catalog buttons
-import './CatButtons.css'
+import './CatCardButtons.css'
 
 //here we are declaring catbuttons to take in props
 const CatButtons = (props) => {

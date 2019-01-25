@@ -4,8 +4,8 @@ import React from 'react'
 import './Card.css'
 
 //importing the bottons that will apear on the cards
-import CatButtons from './CatButtons/CatButtons'
-import LibButtons from './LibButtons/LibButtons'
+import CatButtons from './CatCardButtons/CatCardButtons'
+import LibButtons from './LibCardButtons/LibCardButtons'
 import SingleCardButtons from './SingleCardButtons/SingleCardButtons'
 
 //defining what a card is and it takes in props
@@ -17,7 +17,7 @@ const Card = (props) => {
             <img className='card' src={props.imageURIS} alt="Magic Card" onClick={() => props.handleCardClickFn(props.id)} />
             {
                 // if the buttons are equal to catalog
-                props.buttons === 'singleCard'
+                props.path === 'singleCard'
                     ?
                     <div>
                         {/* //show the single card view */}
@@ -48,7 +48,7 @@ const Card = (props) => {
             <img className='card' src={props.imageURIS} alt="Magic Card" onClick={() => props.handleCardClickFn(props.id)} />
             {
                 // if the buttons are equal to catalog
-                props.buttons === 'catalog'
+                props.pathname === '/catalog'
                     ?
                     //show the catalog buttons
                     //we will pass into this one the handle add catalog button function from app.js to the catalog buttons
@@ -61,7 +61,7 @@ const Card = (props) => {
                     null
             }
             {
-                props.buttons === 'library'
+                props.pathname === '/library'
                     ?
                     //otherwise show the library buttons
                     //this is why I may need to come back and fix this turnary if I add more buttons
@@ -81,7 +81,9 @@ const Card = (props) => {
         </div>
     //this saying we are going to return something to react render
     return (
-        props.buttons === 'singleCard' ? singleCardView : notSingleCardView
+        <div>
+            {props.pathname === 'singleCard' ? singleCardView : notSingleCardView}
+        </div>
     )
 }
 

@@ -1,7 +1,7 @@
 //here we are importing the things from react
 import React from 'react'
 //here we are importing the styling for the library buttons
-import './LibButtons.css'
+import './LibCardButtons.css'
 
 //here we are declaring a functional component of library butons that takes in props from card.js from app.js
 const LibButtons = (props) => {

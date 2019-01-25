@@ -12,9 +12,10 @@
     min-width: 500px;
 }
 
-.headerName {
+.headerNameLink {
     position: absolute;
     top: 10px;
     left: 10px;
+    text-decoration: none;
     color: #32bebf;
 }

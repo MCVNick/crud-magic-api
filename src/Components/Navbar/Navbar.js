@@ -1,5 +1,7 @@
 //here we are saying that this will use stuff from react
 import React from 'react';
+import { Link } from 'react-router-dom'
+
 //here we are importing the header style sheet
 import './Navbar.css'
 
@@ -16,7 +18,7 @@ const Header = (props) => {
             {/* in there we have a header that will show one of two things if props.name is defined */}
             <h1 className='headerName'>
                 {/* if props has a name and it is defined display it, otherwise say enter a name */}
-                {props.name ? props.name : 'Enter A Name'}
+                <Link className='headerNameLink' to='/'>{props.name ? props.name : 'Enter A Name'}</Link>
             </h1>
             {/* here we are creating a filter and passing it a prop from app.js down a second time to filter.js */}
             <Filter handleOnChangeFn={props.handleOnChangeFn}/>

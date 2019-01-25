@@ -1,6 +1,8 @@
 //importing important things that will be used later in the app
 import React, { Component } from 'react';
 import { HashRouter as Router } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //the other styling for this app. Start with a reset
 import './reset.css'
@@ -29,13 +31,24 @@ class App extends Component {
             {/* Creating the sidebar that will also be on every page */}
             <Sidebar />
             <main className='main'>
-              <img className='mainImg' src={myImg} alt='Background'/>
+              <img className='mainImg' src={myImg} alt='Background' />
               {/* This is everything else that will be changing on the webpage */}
               <div className='mainContent'>
                 {routes}
               </div>
             </main>
           </div>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={1000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover={false}
+          />
         </div>
       </Router>
     )
